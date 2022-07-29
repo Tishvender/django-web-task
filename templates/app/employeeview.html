@@ -1,0 +1,68 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block nav %}
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{% url 'signup' %}">Sign Up</a>
+   <span> <small>Already user Login here ?</small> <a href="{% url 'login' %}">Login</a></span>
+</div> 
+{% endblock nav %}
+{% block content %}
+   <div class="col">
+        <div class="col-sm-6 ms-5" >
+        {% if request.user.is_authenticated %}
+            <h4>Add Employee</h4>  
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form.visible_fields %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-danger">Add Employee</button>
+            </form>
+        </div>
+        <br>
+        <h1>Scroll down</h1>
+<br><br><br><br><br><br><br><br>
+        <br>
+        <div class="col-sm-8">
+            <h4 class="text-start text-decoration-underline ms-5">Employee List Screen:-</h4>
+            {% if em %}
+                <table class="table table-hover table-bordered border-danger ms-5">
+                    <thead style="background-color:rgb(224, 39, 30)">
+                    <tr>
+                        <th scope="col">SNo.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Email Department</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in em %}
+                    <tr>
+                        <th scope="row">{{e.id}}</th>
+                        <td>{{e.name}}</td>
+                        <td>{{e.contact}}</td>
+                        <td>{{e.email_department}}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'employeeview' %}" class="btn btn-danger text-center table table-bordered mt-0 ms-5">Add Employee</a>
+            {% else %}
+                <h4 class="text-start alert alert-danger">No Records</h4>
+            {% endif %}
+            {% else %}
+            <br>
+            <marquee behavior="scroll" direction="left" scrollamount="20">Please  Login Through Your Credentials </marquee>
+            <br>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

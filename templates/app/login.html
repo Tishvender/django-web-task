@@ -1,0 +1,17 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block login %}
+<form action="" method='POST' novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <p>{{error}}</p>
+    {% endfor %}
+    {% endif %}
+{% for fm in form %}
+{{fm.label_tag}} {{fm}} {{fm.errors|striptags}} <br><br>
+{% endfor %}   
+<input type="submit" value="Login" class="btn btn-danger"> 
+</form>
+<a href="{% url 'signup' %}">Signup</a>
+{% endblock login %}

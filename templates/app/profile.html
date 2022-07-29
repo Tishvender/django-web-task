@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block profile %}
+Welcome {{name}}. <br><br>
+You 
+{% if messages %}
+{% for message in messages %}
+    <small {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</small>
+{% endfor %}
+{% endif %} In Empezar. <br><br>
+<a href="{% url 'logout' %}">Logout</a><br><br>
+<a href="{% url 'employeeview' %}">Employee View Details</a>
+{% endblock profile %}
